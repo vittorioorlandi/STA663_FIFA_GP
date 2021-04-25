@@ -3,3 +3,9 @@ src/.DS_Store
 .DS_Store
 *.pyc
 *.so
+
+build/*
+dist/*
+fifa_gp.egg*
+
+.rend*
