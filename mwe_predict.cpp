@@ -93,6 +93,6 @@ Eigen::MatrixXd predict(Eigen::MatrixXd X, Eigen::MatrixXd Y, Eigen::MatrixXd Xt
     return fstarsamp;
 }
 
-void predict_module(py::module_ &m) {
+void predict_module(py::module &m) {
     m.def("predict_f", &predict, "predicted samples of f at new X");
 }

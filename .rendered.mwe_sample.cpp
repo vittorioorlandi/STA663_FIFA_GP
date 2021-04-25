@@ -19,7 +19,7 @@ using std::normal_distribution;
 
 namespace py = pybind11;
 
-void predict_module(py::module_ &);
+void predict_module(py::module &);
 
 // // AZ: draw random samples from f
 // // S is an argument that in the code should be Svec[rho_ind]
