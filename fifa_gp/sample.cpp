@@ -1,12 +1,12 @@
 <%
 cfg['compiler_args'] = ['-std=c++11','-DUSE_DOUBLE']
-cfg['include_dirs'] = ['../eigen', './include']
-cfg['sources'] = ['./src/HODLR_Matrix.cpp',
-    './src/HODLR_Node.cpp',
-    './src/HODLR_Tree.cpp',
-    './src/HODLR_Tree_NonSPD.cpp',
-    './src/HODLR_Tree_SPD.cpp',
-    './src/KDTree.cpp',
+cfg['include_dirs'] = ['../eigen', '../include']
+cfg['sources'] = ['./HODLR_Matrix.cpp',
+    './HODLR_Node.cpp',
+    './HODLR_Tree.cpp',
+    './HODLR_Tree_NonSPD.cpp',
+    './HODLR_Tree_SPD.cpp',
+    './KDTree.cpp',
     './sample_funs.cpp',
     './mwe_predict.cpp']
 setup_pybind11(cfg)
@@ -514,7 +514,7 @@ py::list sampleGP_HODLR(Eigen::MatrixXd X, Eigen::VectorXd Y,
   return out;
 }
 
-PYBIND11_MODULE(mwe_sample, m) {
+PYBIND11_MODULE(sample, m) {
     m.doc() = "C++ Implementation of FIFA-GP.";
     m.def("samplegp", &sampleGP_HODLR, "1-d GP.");
     predict_module(m);
