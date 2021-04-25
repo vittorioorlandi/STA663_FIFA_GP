@@ -1,0 +1,4 @@
+recursive-include eigen *
+recursive-include include *
+recursive-include fifa_gp *.cpp *.h *.so
+include mwe.py
