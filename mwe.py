@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.spatial
-from regression import FIFA_GP
+from fifa_gp.regression import FIFA_GP
 
 np.random.seed(196)
 
