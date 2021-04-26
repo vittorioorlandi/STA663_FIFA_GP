@@ -1,6 +1,6 @@
 <%
 cfg['compiler_args'] = ['-std=c++11','-DUSE_DOUBLE']
-cfg['include_dirs'] = ['../eigen', '../include']
+cfg['include_dirs'] = ['eigen', 'include']
 cfg['sources'] = ['./HODLR_Matrix.cpp',
     './HODLR_Node.cpp',
     './HODLR_Tree.cpp',
