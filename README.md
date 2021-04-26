@@ -15,6 +15,8 @@ pip install --index_url https://test.pypi.org/simple/ fifa-gp
 
 A basic example is shown below, where X is an $n \times p$ numpy array of covariates and $Y$ is an $n \times 1$ array of outputs. 
 See mwe.py for a more details. 
+The *first* time you call the function `FIFA_GP`, cppimport will check whether you have a compiled C++ module to sample the GP. 
+If not, the C++ files will be compled for you (this will take a few seconds), and future calls to `FIFA_GP` will use that complied file. 
 
 ```python
 import numpy as np
