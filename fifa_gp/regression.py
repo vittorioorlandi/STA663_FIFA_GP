@@ -3,10 +3,12 @@ import pandas as pd
 import numpy as np
 import sys, os
 
+#add fifa_gp to sys.path to find compiled cpp functions
 for p in sys.path:
 	if os.path.isdir(p + '/fifa_gp'):
 		sys.path.append(p + '/fifa_gp')
 
+#for running from inside the tar.gz file without package installation
 if not any('fifa_gp' in p for p in sys.path):
 	sys.path.append('fifa_gp')
 
