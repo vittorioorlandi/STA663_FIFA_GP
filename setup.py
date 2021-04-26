@@ -11,9 +11,16 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+install_requires = [
+    'pybind11',
+    'numpy',
+    'pandas',
+    'cppimport'
+    ]
+
 setuptools.setup(
     name="fifa-gp", 
-    version="0.0.5",
+    version="0.0.8",
     author="Alessandro Zito, Graham Tierney, and Vittorio Orlandi",
     author_email="vittorio.orlandi@duke.edu",
     description="Python implementation of FIFA-GP from Moran and Wheeler (2020)",
@@ -30,5 +37,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     packages=["fifa_gp"],
+    include_package_data=True,
+    install_requires = install_requires,
     python_requires=">=3.6",
 )
