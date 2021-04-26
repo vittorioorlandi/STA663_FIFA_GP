@@ -3,7 +3,7 @@
 This package contains a python module implementing the **F**ast **I**ncreased **F**idelity **A**pproximate **G**aussian **P**rocess (FIFA-GP) algorithm from [Moran and Wheeler (2020)](https://arxiv.org/abs/2006.06537) in C++. 
 A GP with the following structure is estimated: 
 
-$$ x = y$$ 
+$$ x = y $$ 
 
 $$y_i = f(x_i) + e_i, \text{where } e_i \sim N(0,\tau^{-1}$$
 
