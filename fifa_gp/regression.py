@@ -1,8 +1,14 @@
 import cppimport
 import pandas as pd
 import numpy as np
-import sys
-sys.path.append('fifa_gp')
+import sys, os
+
+for p in sys.path:
+	if os.path.isdir(p + '/fifa_gp'):
+		sys.path.append(p + '/fifa_gp')
+
+if not any('fifa_gp' in p for p in sys.path):
+	sys.path.append('fifa_gp')
 
 class FIFA_GP:
 	"""Implementation of Fast Increased Fidelity Approximate Gaussian Process Regressor."""
