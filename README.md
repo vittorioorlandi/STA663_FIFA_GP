@@ -5,6 +5,8 @@ A GP with the following structure is estimated:
 
 ![equation](https://latex.codecogs.com/png.latex?y_i%20%3D%20f%28%5Cmathbf%7Bx%7D_i%29%20&plus;%20e_i%2C%20%5Ctext%7Bwhere%20%7D%20e_i%20%5Csim%20N%280%2C%5Ctau%5E%7B-1%7D%29)
 
+Where f is a GP with the following kernel structure: 
+
 ![equation](https://latex.codecogs.com/png.latex?%5Cmathbf%7Bf%7D%20%5Csim%20N%280%2C%5Cmathbf%7BK%7D%29%2C%20%5Ctext%7Bwhere%20%7D%20K_%7Bij%7D%20%3D%20%5Csigma%5E2%20%5Cexp%5B-1/2%28%5Cmathbf%7Bx%7D_i%20-%20%5Cmathbf%7Bx%7D_j%29%27%20%5Ctext%7Bdiag%7D%28%5Crho%5E%7B-2%7D%29%20%28%5Cmathbf%7Bx%7D_i%20-%20%5Cmathbf%7Bx%7D_j%29%5D)
 
 Currently hosted on the test PyPi, this package is instalable via pip with the below command: 
