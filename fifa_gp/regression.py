@@ -27,6 +27,7 @@ class FIFA_GP:
 	y: Scalar response
 	tol: Tolerance for HODLR matrix approximation
 	M: Maximum submatrix size for HODLR matrix approximation
+	save_fsamps: True if samples of f were saved while sampling; False, otherwise.
 	nsamps: Number of samples returned from the MCMC
 	tau: Posterior samples of noise precision tau
 	sig_f: Posterior samples of function standard deviation sigma_f
@@ -76,6 +77,7 @@ class FIFA_GP:
 		self.tol = tol
 		self.M = M
 		self.nsamps = nsamps
+		self.save_fsamps = save_fsamps
 
 		out = self.fifa_gp.samplegp(X, y, sig, rho_choices, tau, 
 			regression, Gibbs_ls, default_MHkernel, numeric_MHkernel, 
