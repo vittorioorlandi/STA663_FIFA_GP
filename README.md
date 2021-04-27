@@ -37,13 +37,8 @@ D = scipy.spatial.distance_matrix(X,X)**2
 cov = np.exp(-D/2)
 Y = np.random.multivariate_normal(np.zeros(n), cov + 5 * np.eye(n))
 
-#discrete uniform prior on 10 values between 0.5 and 2.5. 
-rho_min = 0.5
-rho_max = 2.5
-rho_len = 10
-rho_choices = np.linspace(rho_min,rho_max,rho_len)
-
 gp = FIFA_GP()
+
 # Fit FIFA-GP to the data, using default prior and MCMC parameters
 gp.fit(X, Y)
 
@@ -57,6 +52,6 @@ gp.predict_y_mean(Xtest)
 gp.get_params_mean()
 
 #compute MSE on training data
-mse_mean = ((Y.reshape(n, 1) - gp.f) ** 2).mean()
-print('MSE: ' + str(mse_mean))
+MSE = ((Y.reshape(n, 1) - gp.f) ** 2).mean()
+print('MSE: ' + str(MSE))
 ```
