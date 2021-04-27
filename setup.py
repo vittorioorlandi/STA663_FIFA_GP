@@ -20,7 +20,7 @@ install_requires = [
 
 setuptools.setup(
     name="fifa-gp", 
-    version="0.0.10",
+    version="0.0.12",
     author="Alessandro Zito, Graham Tierney, and Vittorio Orlandi",
     author_email="vittorio.orlandi@duke.edu",
     description="Python implementation of FIFA-GP from Moran and Wheeler (2020)",

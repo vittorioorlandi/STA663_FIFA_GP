@@ -1,3 +1,3 @@
 recursive-include fifa_gp *
 include mwe.py
-recursive-exclude fifa_gp sample.cpython*
+recursive-exclude fifa_gp sample.cpython* 
