@@ -44,24 +44,19 @@ rho_len = 10
 rho_choices = np.linspace(rho_min,rho_max,rho_len)
 
 gp = FIFA_GP()
-gp.fit(X,Y,
-       1,rho_choices,1,
-       True,False,
-       True,-1,
-       1,1,1,1,
-       1e-12,20,True,169,"none",
-       0,100,1,False)
+# Fit FIFA-GP to the data, using default prior and MCMC parameters
+gp.fit(X, Y)
 
-fpred = gp.predict_f_mean(Xtest)
+# Predict f for observations in Xtest using the posterior predictive mean
+gp.predict_f_mean(Xtest)
 
-#show parameter summaries
-print(gp.get_params_mean())
-print(gp.get_params())
+# Predict outcomes for units in Xtest using the posterior predictive mean
+gp.predict_y_mean(Xtest)
 
-#show mean for test samle
-print(np.mean(fpred, axis = 1))
+# Posterior means of the GP parameters
+gp.get_params_mean()
 
 #compute MSE on training data
-mse_mean = ((Y.reshape(n,1) - gp.f)**2).mean()
+mse_mean = ((Y.reshape(n, 1) - gp.f) ** 2).mean()
 print('MSE: ' + str(mse_mean))
 ```
