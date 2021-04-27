@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import scipy.spatial
 from fifa_gp.regression import FIFA_GP
 
