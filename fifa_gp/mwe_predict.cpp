@@ -17,6 +17,8 @@ Eigen::MatrixXd predict(Eigen::MatrixXd X, Eigen::MatrixXd Y, Eigen::MatrixXd Xt
 
   //////////// PASS THE GENERATOR //////////
 
+    std::cout << "hullo there" << std::endl;
+
     // Create the standard normal generator
     normal_distribution<double> norm(0, 1);
     std::mt19937 rng;
