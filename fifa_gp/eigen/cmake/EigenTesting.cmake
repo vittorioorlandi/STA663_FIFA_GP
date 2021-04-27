@@ -18,6 +18,11 @@ macro(ei_add_test_internal testname testname_with_suffix)
     set(filename ${testname}.cpp)
   endif()
 
+  # Add the current target to the list of subtest targets
+  get_property(EIGEN_SUBTESTS_LIST GLOBAL PROPERTY EIGEN_SUBTESTS_LIST)
+  set(EIGEN_SUBTESTS_LIST "${EIGEN_SUBTESTS_LIST}${targetname}\n")
+  set_property(GLOBAL PROPERTY EIGEN_SUBTESTS_LIST "${EIGEN_SUBTESTS_LIST}")
+
   if(EIGEN_ADD_TEST_FILENAME_EXTENSION STREQUAL cu)
     if(EIGEN_TEST_HIP)
       hip_reset_flags()
@@ -413,11 +418,13 @@ macro(ei_init_testing)
   define_property(GLOBAL PROPERTY EIGEN_MISSING_BACKENDS BRIEF_DOCS " " FULL_DOCS " ")
   define_property(GLOBAL PROPERTY EIGEN_TESTING_SUMMARY BRIEF_DOCS " " FULL_DOCS " ")
   define_property(GLOBAL PROPERTY EIGEN_TESTS_LIST BRIEF_DOCS " " FULL_DOCS " ")
+  define_property(GLOBAL PROPERTY EIGEN_SUBTESTS_LIST BRIEF_DOCS " " FULL_DOCS " ")
 
   set_property(GLOBAL PROPERTY EIGEN_TESTED_BACKENDS "")
   set_property(GLOBAL PROPERTY EIGEN_MISSING_BACKENDS "")
   set_property(GLOBAL PROPERTY EIGEN_TESTING_SUMMARY "")
   set_property(GLOBAL PROPERTY EIGEN_TESTS_LIST "")
+  set_property(GLOBAL PROPERTY EIGEN_SUBTESTS_LIST "")
 
   define_property(GLOBAL PROPERTY EIGEN_FAILTEST_FAILURE_COUNT BRIEF_DOCS " " FULL_DOCS " ")
   define_property(GLOBAL PROPERTY EIGEN_FAILTEST_COUNT BRIEF_DOCS " " FULL_DOCS " ")
@@ -708,3 +715,56 @@ macro(ei_split_testsuite num_splits)
     add_dependencies("${current_target}" "${curr_test}")
   endforeach()
 endmacro(ei_split_testsuite num_splits)
+
+# Defines the custom command buildsmoketests to build a number of tests
+# specified in smoke_test_list.
+# 
+# Test in smoke_test_list can be either test targets (e.g. packetmath) or
+# subtests targets (e.g. packetmath_2). If any of the test are not available
+# in the current configuration they are just skipped. 
+#
+# All tests added via this macro are labeled with the smoketest label. This
+# allows running smoketests only using ctest.
+#
+# Smoke tests are intended to be run before the whole test suite is invoked,
+# e.g., to smoke test patches.
+macro(ei_add_smoke_tests smoke_test_list)
+  # Set the build target to build smoketests
+  set(buildtarget "buildsmoketests")
+  add_custom_target("${buildtarget}")
+
+  # Get list of all tests and translate it into a CMake list
+  get_property(EIGEN_TESTS_LIST GLOBAL PROPERTY EIGEN_TESTS_LIST)
+  string(REGEX REPLACE "\n" " " EIGEN_TESTS_LIST "${EIGEN_TESTS_LIST}")
+  set(EIGEN_TESTS_LIST "${EIGEN_TESTS_LIST}")
+  separate_arguments(EIGEN_TESTS_LIST)
+
+  # Check if the test in smoke_test_list is a currently valid test target
+  foreach(test IN ITEMS ${smoke_test_list})
+    # Add tests in smoke_test_list to our smoke test target but only if the test
+    # is currently available, i.e., is in EIGEN_SUBTESTS_LIST
+    if ("${test}" IN_LIST EIGEN_TESTS_LIST)
+      add_dependencies("${buildtarget}" "${test}")
+      # In the case of a test we match all subtests
+      set(ctest_regex "${ctest_regex}^${test}_[0-9]+$$|")
+    endif()
+  endforeach()
+
+  # Get list of all subtests and translate it into a CMake list
+  get_property(EIGEN_SUBTESTS_LIST GLOBAL PROPERTY EIGEN_SUBTESTS_LIST)
+  string(REGEX REPLACE "\n" " " EIGEN_SUBTESTS_LIST "${EIGEN_SUBTESTS_LIST}")
+  set(EIGEN_SUBTESTS_LIST "${EIGEN_SUBTESTS_LIST}")
+  separate_arguments(EIGEN_SUBTESTS_LIST)
+
+  # Check if the test in smoke_test_list is a currently valid subtest target
+  foreach(test IN ITEMS ${smoke_test_list})
+    # Add tests in smoke_test_list to our smoke test target but only if the test
+    # is currently available, i.e., is in EIGEN_SUBTESTS_LIST
+    if ("${test}" IN_LIST EIGEN_SUBTESTS_LIST)
+      add_dependencies("${buildtarget}" "${test}")
+      # Add label smoketest to be able to run smoketests using ctest
+      get_property(test_labels TEST ${test} PROPERTY LABELS)
+      set_property(TEST ${test} PROPERTY LABELS "${test_labels};smoketest")
+    endif()
+  endforeach()
+endmacro(ei_add_smoke_tests)
